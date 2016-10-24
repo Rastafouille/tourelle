@@ -1,0 +1,6 @@
+#Image AR
+~default_scale_max : 30.0
+~default_scale_min : 0.0
+~default_horiz_grid : 5
+~default_vert_grid : 5
+~default_transparency : 70

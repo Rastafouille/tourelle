@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<launch>
+    <!-- Define the namespace -->
+    <arg
+        name="tourelle_namespace"
+        value="tourelle"
+    />
+    
+
+    <node
+        ns="$(arg tourelle_namespace)"
+        name="rviz" 
+        pkg="rviz" 
+        type="rviz" 
+        args="-d $(find tourelle_description)/config/default.rviz" 
+    /> 
+    
+</launch>

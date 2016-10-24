@@ -1,0 +1,4 @@
+PAS : 0.002
+PAN_SPEED : 0.5
+TILT_SPEED : 0.5
+#le noeud de cmd tourne a 100hz dc il faut un facteur 100 entre les 2,

@@ -1,0 +1,8 @@
+float32 pan_min
+float32 pan_max
+float32 tilt_min
+float32 tilt_max
+float32 acq_angle
+float32 overlap
+---
+sensor_msgs/Image pano

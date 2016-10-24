@@ -1,0 +1,7 @@
+#video_device: "/dev/serial/by-id/usb-Microsoft_Microsoft®_LifeCam_Studio_TM_-event-if00"
+video_device: "/dev/video0"
+image_width: 1280
+image_height: 720
+#pixel_format: yuyv
+camera_frame_id: "camera_link"
+autofocus: true 

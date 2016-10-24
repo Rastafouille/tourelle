@@ -1,0 +1,8 @@
+float32 time_step
+float32 pan_count
+float32 tilt_count
+float32 pan_min
+float32 pan_max
+float32 tilt_min
+float32 tilt_max
+---

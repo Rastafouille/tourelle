@@ -1,0 +1,98 @@
+<?xml version="1.0" ?>
+
+<launch>
+    <!-- Convert the Xacro file and load it -->
+    <param 
+        name="robot_description" 
+        command="$(find xacro)/xacro.py '$(find tourelle_description)/urdf/tourelle.xacro'" 
+    />
+    <!-- Define the namespace -->
+    <arg
+        name="tourelle_namespace"
+        value="tourelle"
+    />
+    <!-- Start the Dynamixel Manager -->
+    <node
+        ns="$(arg tourelle_namespace)"
+        name="dynamixel_manager"
+        pkg="dynamixel_controllers"
+        type="controller_manager.py"
+	required="true"
+        output="screen">
+        <rosparam
+            command="load"
+            file="$(find tourelle_ros)/config/dxl_port.yaml"
+        />
+    </node>
+    <!-- Load the Dynamixel parameters -->
+    <rosparam
+        ns="$(arg tourelle_namespace)"
+        command="load"
+        file="$(find tourelle_ros)/config/servos.yaml"
+    />
+    <!-- Start the Dynamixel controllers -->
+    <node
+        ns="$(arg tourelle_namespace)"
+        name="dynamixel_spawner"
+        pkg="dynamixel_controllers"
+        type="controller_spawner.py"
+        args="--manager=dynamixel_manager
+              --port dynamixel_port
+              j_BASE_ACC_position_controller
+              j_ACC_PLT_position_controller
+              "
+        output="screen"
+    />
+    <!-- Start the Dynamixel Joint State Publisher 
+    ATTENTION licence GPL-->
+    
+    <node
+        ns="$(arg tourelle_namespace)"
+        name="dynamixel_joint_state_publisher"
+        pkg="tourelle_ros"
+        type="dynamixel_joint_state_publisher.py"
+        output="screen">
+        <param
+            name="rate"
+            value="20"
+        />
+    </node>
+    <node 
+        ns="$(arg tourelle_namespace)"
+        name="robot_state_publisher" 
+        pkg="robot_state_publisher" 
+        type="robot_state_publisher" 
+        respawn="false"         
+        output="screen">
+        <param
+            name="publish_frequency"
+            value="100"
+       />
+    </node>
+
+    <!-- Expose the usb camera -->
+    <node
+        name="usb_cam_node"
+        pkg="usb_cam"
+        type="usb_cam_node"
+        output="screen">
+        <rosparam
+            command="load"
+            file="$(find tourelle_ros)/config/usb_cam.yaml"
+        />
+    </node>
+
+    <node 
+        pkg="tourelle_ros"
+        name="telemeter"
+        type="telemeter.py" 
+        output="screen"
+    />
+
+    <node
+        name="rviz" 
+        pkg="rviz" 
+        type="rviz" 
+        args="-d $(find tourelle_description)/config/default.rviz" 
+    /> 
+</launch>

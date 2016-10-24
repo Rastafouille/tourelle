@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<launch>
+
+ <node name="pano_server" pkg="pano_ros" type="capture_server.py">
+ <remap from="camera" to="/usb_cam"/>
+</node>
+
+  <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
+  <rosparam
+            command="load"
+            file="$(find tourelle_ros)/config/usb_cam.yaml"
+  />
+  </node>
+  <node name="rqt_image_view" pkg="rqt_image_view" type="rqt_image_view" respawn="false" output="screen">
+    <remap from="image" to="/usb_cam/image_raw"/>
+    <param name="autosize" value="true" />
+  </node>
+  
+</launch>

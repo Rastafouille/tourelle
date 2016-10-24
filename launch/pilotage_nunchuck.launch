@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+
+<launch>
+    <!--reset bluetooth :sudo hciconfig hci0 reset -->
+        <!-- Define the namespace -->
+    <arg
+        name="tourelle_namespace"
+        value="tourelle"
+    />    
+    <node 
+        ns="$(arg tourelle_namespace)"
+        pkg="tourelle_ros" 
+        name="nunchuk2cmdvel" 
+        type="nunchuk2cmdvel.py" 
+        output="screen">
+	 <remap 
+            from="/nunchuk/cmd_vel" 
+            to="/tourelle/nunchuk/cmd_vel"
+        />
+    </node>
+    <node 
+        ns="$(arg tourelle_namespace)"
+        pkg="tourelle_ros" 
+        name="pilotage_nunchuck" 
+        type="pilotage_nunchuck.py" 
+        output="screen">
+	<rosparam
+            command="load"
+            file="$(find tourelle_ros)/config/nunchuck.yaml"
+    />
+    </node>
+        
+</launch>

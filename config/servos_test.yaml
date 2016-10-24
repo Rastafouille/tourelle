@@ -1,0 +1,25 @@
+j_BASE_ACC_position_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: j_BASE_ACC
+    joint_speed: 0.5
+    motor:
+        id: 1
+        init: 0
+        min: 0
+        max: 4095
+
+j_ACC_PLT_position_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: j_ACC_PLT
+    joint_speed: 0.5
+    motor:
+        id: 21
+        init: 0
+        min: 0
+        max: 1200
