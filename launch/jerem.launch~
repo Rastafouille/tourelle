@@ -47,7 +47,7 @@
 	<rosparam
 		ns="$(arg tourelle_namespace)"
 		command="load"
-		file="$(find tourelle)/config/servos.yaml"
+		file="$(find tourelle_ros)/config/servos.yaml"
 	/>
 <!-- Start the Dynamixel controllers -->
     
@@ -64,19 +64,18 @@
 		output="screen"
 	/>
     
-<!-- Convert the Xacro file and load it 
+<!-- Convert the Xacro file and load it -->
 	<param 
 		name="robot_description" 
 		command="$(find xacro)/xacro.py '$(find tourelle_description)/urdf/tourelleV2.xacro'" 
 	/>
--->
     
 <!-- Start the Dynamixel Joint State Publisher 
     ATTENTION licence GPL-->
 	<node
 		ns="$(arg tourelle_namespace)"
 		name="dynamixel_joint_state_publisher"
-		pkg="tourelle"
+		pkg="tourelle_ros"
 		type="dynamixel_joint_state_publisher.py"
 		output="screen">
 		<param
@@ -85,7 +84,7 @@
 		/>
 	</node>
     
-<!--	<node 
+	<node 
 		ns="$(arg tourelle_namespace)"
 		name="robot_state_publisher" 
 		pkg="robot_state_publisher" 
@@ -97,9 +96,8 @@
 		    value="100"
 		/>
 	</node>
--->
    
-<!-- Expose the usb camera 
+<!-- Expose the usb camera -->
 	<node
 		ns="$(arg tourelle_namespace)"
 		name="usb_cam_node"
@@ -120,6 +118,58 @@
 			to="/tourelle/usb_cam_node"
 		/>    
 	</node>
--->
+
+<!-- Expose the telemeter -->
+	<node 
+		ns="$(arg tourelle_namespace)"
+		pkg="tourelle_ros"
+		name="telemeter_node"
+		type="telemeter.py" 
+		output="screen">
+		<rosparam
+			command="load"
+			file="$(find tourelle_ros)/config/telemeter.yaml"
+		/>
+		<remap 
+			from="/telemeter" 
+			to="/tourelle/telemeter"
+		/>
+	</node>
+    
+	<node 
+		ns="$(arg tourelle_namespace)"
+		pkg="tourelle_ros"
+		name="GR1_node"
+		type="GR1.py" 
+		output="screen">
+		<rosparam
+			command="load"
+			file="$(find tourelle_ros)/config/GR1.yaml"
+		/>
+	</node>
+
+       <node 
+		ns="$(arg tourelle_namespace)"
+		pkg="tourelle_ros"
+		name="pcl2_creator_node"
+		type="pcl_creator_2.py" 
+		output="screen">
+	</node>
+    
+	<node 
+		ns="$(arg tourelle_namespace)"
+		pkg="tourelle_ros"
+		name="pcl2_creator_2d_node"
+		type="pcl_creator_2d.py" 
+		output="screen">
+	</node>
+    
+        <node 
+		ns="$(arg tourelle_namespace)"
+		pkg="tourelle_ros"
+		name="real_aug_node"
+		type="image_ar.py" 
+		output="screen">
+	</node>
     
 </launch>
